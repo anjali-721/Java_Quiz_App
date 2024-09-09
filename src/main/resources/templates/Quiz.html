@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #3498db, #2ecc71); /* Gradient background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 0;
+            position: relative;
+        }
+        h3 {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #3498db;
+            font-weight: 500;
+        }
+        h3 p {
+            margin: 5px 0;
+            font-size: 1em;
+            color: #555;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .question h2::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .submit-button, .reset-button {
+            display: block;
+            width: 75%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-button {
+            color: #3498db;
+            font-weight: bold;
+            background-color: #eaf2f8;
+        }
+        .submit-button:hover {
+            background-color: #c6dff1;
+            text-decoration: underline;
+        }
+        .reset-button {
+            color: #e0101f;
+            font-weight: bold;
+            background-color: #fceef0;
+        }
+        .reset-button:hover {
+            background-color: #f8cfd0;
+            text-decoration: underline;
+        }
+        .error-message {
+            color: red;
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Java Quiz</h1>
+        <h3>
+            <p>Name: <span th:text="${name}"></span></p>
+            <p>Email: <span th:text="${email}"></span></p>
+        </h3>
+        <form id="quizForm" action="/submit" method="post" onsubmit="return validateForm()">
+            <!-- Hidden fields for name and email -->
+            <input type="hidden" name="name" th:value="${name}">
+            <input type="hidden" name="email" th:value="${email}">
+
+            <!-- Quiz questions -->
+            <div class="question">
+                <h2>1. What is the default value of a boolean variable in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a" required> true</label>
+                    <label><input type="radio" name="q1" value="b"> false</label>
+                    <label><input type="radio" name="q1" value="c"> null</label>
+                    <label><input type="radio" name="q1" value="d"> 0</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>2. Which of the following is not a primitive data type in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a" required> int</label>
+                    <label><input type="radio" name="q2" value="b"> float</label>
+                    <label><input type="radio" name="q2" value="c"> String</label>
+                    <label><input type="radio" name="q2" value="d"> char</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>3. What does the 'static' keyword indicate in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a" required> The method or variable belongs to the class rather than instances</label>
+                    <label><input type="radio" name="q3" value="b"> The method or variable is private</label>
+                    <label><input type="radio" name="q3" value="c"> The method or variable is abstract</label>
+                    <label><input type="radio" name="q3" value="d"> The method or variable is synchronized</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>4. What will be the output of the following code snippet: int x = 10; System.out.println(++x);?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a" required> 10</label>
+                    <label><input type="radio" name="q4" value="b"> 11</label>
+                    <label><input type="radio" name="q4" value="c"> 12</label>
+                    <label><input type="radio" name="q4" value="d"> Compilation error</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>5. Which method is used to start a thread in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a" required> run()</label>
+                    <label><input type="radio" name="q5" value="b"> start()</label>
+                    <label><input type="radio" name="q5" value="c"> execute()</label>
+                    <label><input type="radio" name="q5" value="d"> initiate()</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>6. Which of the following is a marker interface in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a" required> Serializable</label>
+                    <label><input type="radio" name="q6" value="b"> Runnable</label>
+                    <label><input type="radio" name="q6" value="c"> Comparable</label>
+                    <label><input type="radio" name="q6" value="d"> AutoCloseable</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>7. Which of the following is used to handle exceptions in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a" required> try-catch</label>
+                    <label><input type="radio" name="q7" value="b"> for-each</label>
+                    <label><input type="radio" name="q7" value="c"> if-else</label>
+                    <label><input type="radio" name="q7" value="d"> switch-case</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>8. What is the superclass of all classes in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a" required> Object</label>
+                    <label><input type="radio" name="q8" value="b"> Class</label>
+                    <label><input type="radio" name="q8" value="c"> Serializable</label>
+                    <label><input type="radio" name="q8" value="d"> Throwable</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>9. Which of the following is not an access modifier in Java?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a" required> private</label>
+                    <label><input type="radio" name="q9" value="b"> protected</label>
+                    <label><input type="radio" name="q9" value="c"> default</label>
+                    <label><input type="radio" name="q9" value="d"> internal</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2>10. Which Java keyword is used to create an object?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a" required> new</label>
+                    <label><input type="radio" name="q10" value="b"> create</label>
+                    <label><input type="radio" name="q10" value="c"> instance</label>
+                    <label><input type="radio" name="q10" value="d"> object</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-button">Submit</button>
+                <button type="button" class="reset-button" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        function validateForm() {
+            const form = document.getElementById('quizForm');
+            const questions = form.querySelectorAll('.question');
+            let allAnswered = true;
+
+            questions.forEach((question) => {
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+                if (!selectedOption) {
+                    allAnswered = false;
+                }
+            });
+
+            if (!allAnswered) {
+                document.getElementById('error-message').innerText = 'Please answer all questions before submitting.';
+                document.getElementById('error-message').style.display = 'block';
+                return false; // Prevent form submission
+            }
+
+            document.getElementById('error-message').style.display = 'none';
+               return true;
+        }
+
+        function resetForm() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('error-message').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

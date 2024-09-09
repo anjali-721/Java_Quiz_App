@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: linear-gradient(135deg, #3498db, #2ecc71); 
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+			text-align: center;
+			color: #fff;
+			background:  linear-gradient(135deg, #3498db, #2ecc71);
+			padding: 15px;
+			border-radius: 8px;
+        }
+
+
+       
+        .result-summary div {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+       
+
+        /* Hidden input styles */
+        input[type="hidden"] {
+            display: none;
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+            background-color: #fff ;
+            color: #3498db;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+			font-weight: bold;
+
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: rgb(142, 194, 230);
+			text-decoration: underline;
+			        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Result</h1>
+
+        <div class="result-summary">
+            <div>
+                <h3>Name: <span th:text="${name}">[Name Not Found]</span></h3>
+                <h3>Email: <span th:text="${email}">[Email Not Found]</span></h3>
+                <h3>Score: <span th:text="${score}">[Score Not Found]</span></h3>
+                <h3>Rank: <span th:text="${rank}">[Rank Not Found]</span></h3>
+            </div>
+        </div>
+
+        <form action="/leaderboard" method="post">
+            <input type="hidden" name="name" th:value="${name}">
+            <input type="hidden" name="email" th:value="${email}">
+            <button type="submit">Leaderboard</button>
+        </form>
+    </div>
+</body>
+</html>
